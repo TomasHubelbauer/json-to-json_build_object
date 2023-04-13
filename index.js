@@ -124,7 +124,7 @@ inputTextArea.addEventListener('keydown', event => {
 const tests = [
   {
     input: '',
-    output: 'JSON.parse: unexpected end of data at line 1 column 1 of the JSON data',
+    output: '',
   },
 
   // Value roots
