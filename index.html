@@ -10,20 +10,29 @@
   </head>
   <body>
     <h1>
-      JSON to
+      <img src="icon.svg" alt="JSON icon" width="32" height="32" />
+      JSON
+      <span id="arrowSpan">
+        <span>to</span>
+      </span>
       <code>json_build_object</code>
       <div style="flex: 1;">
         <!-- Push the buttons to the right -->
       </div>
-      <button id="randomButton">Random example</button>
+      <button id="randomButton">🎲 Show random example</button>
       <button id="rotateButton"></button>
       <button id="themeButton"></button>
+      <button id="copyButton">📄 Copy result</button>
     </h1>
     <p>
       Everything is local, no network requests with your data are made.
+      <a href="https://hubelbauer.net" target="_blank">I</a> promise.
     </p>
     <div id="mainDiv">
       <textarea id="inputTextArea" placeholder="JSON"></textarea>
+      <span id="arrowSpan">
+        <span>to</span>
+      </span>
       <textarea id="outputTextArea" placeholder="json_build_object" disabled readonly></textarea>
     </div>
   </body>

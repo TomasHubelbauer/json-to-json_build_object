@@ -6,6 +6,7 @@ html {
 :root {
   --background: #eee;
   --color: #222;
+  --layout: row;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +28,44 @@ body {
   flex: 1;
   flex-direction: column;
   font: icon;
+  transition: background .1s, color .1s;
 }
 
 h1 {
+  align-items: center;
   display: flex;
   gap: 1ex;
+}
+
+#arrowSpan span {
+  display: none;
+}
+
+#arrowSpan::after {
+  display: inline-block;
+}
+
+body.horizontal #arrowSpan::after {
+  content: '→';
+}
+
+body.vertical #arrowSpan::after {
+  content: '↓';
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  background: var(--background);
+  border: 1px solid var(--color);
+  border-radius: 2px;
+  color: var(--color);
+  cursor: pointer;
+  height: 100%;
+  padding: 1ex 1em;
+  transition: background .1s, color .1s;
 }
 
 #mainDiv {
@@ -40,12 +74,33 @@ h1 {
   gap: 1ex;
 }
 
+body.horizontal #mainDiv {
+  flex-direction: row;
+}
+
+body.horizontal #arrowSpan::after {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+body.vertical #mainDiv {
+  flex-direction: column;
+}
+
+body.vertical #arrowSpan::after {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 textarea {
   background: var(--background);
   border: 1px solid var(--color);
+  border-radius: 2px;
   color: var(--color);
   flex: 1;
-
+  transition: background .1s, color .1s;
 }
 
 textarea:read-only {

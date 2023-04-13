@@ -16,6 +16,9 @@ const mainDiv = document.querySelector('#mainDiv');
 /** @type {HTMLButtonElement} */
 const themeButton = document.querySelector('#themeButton');
 
+/** @type {HTMLButtonElement} */
+const copyButton = document.querySelector('#copyButton');
+
 function convert(/** @type {string} */ json) {
   if (!json) {
     return '';
@@ -138,28 +141,36 @@ randomButton.addEventListener('click', () => {
 });
 
 rotateButton.addEventListener('click', () => {
-  const flexDirection = mainDiv.style.flexDirection === 'column' ? 'row' : 'column';
-  mainDiv.style.flexDirection = flexDirection;
-  rotateButton.textContent = flexDirection === 'row' ? '║ ⟶ ═' : '═ ⟶ ║';
-  localStorage.setItem(location.href + '|layout', flexDirection);
+  const layout = document.body.classList.contains('vertical') ? 'row' : 'column';
+  document.body.classList.toggle('horizontal', layout === 'row');
+  document.body.classList.toggle('vertical', layout === 'column');
+  rotateButton.textContent = `Toggle layout: ${layout === 'row' ? '↔️ → ↕️' : '↕️ → ↔️'}`;
+  localStorage.setItem(location.href + '|layout', layout);
 });
 
-const flexDirection = localStorage.getItem(location.href + '|layout') ?? 'row';
-mainDiv.style.flexDirection = flexDirection;
-rotateButton.textContent = flexDirection === 'row' ? '║ ⟶ ═' : '═ ⟶ ║';
+const layout = localStorage.getItem(location.href + '|layout') ?? 'row';
+document.body.classList.toggle('horizontal', layout === 'row');
+document.body.classList.toggle('vertical', layout === 'column');
+rotateButton.textContent = `Toggle layout: ${layout === 'row' ? '↔️ → ↕️' : '↕️ → ↔️'}`;
 
 themeButton.addEventListener('click', () => {
   const theme = document.body.classList.contains('dark') ? 'light' : 'dark';
   document.body.classList.toggle('dark', theme === 'dark');
   document.body.classList.toggle('light', theme === 'light');
-  themeButton.textContent = theme === 'dark' ? '☽︎ ⟶ ☉︎' : '☽︎ ⟶ ☉︎';
+  themeButton.textContent = `Toggle theme: ${theme === 'dark' ? '🌚︎ → 🌞︎︎' : '🌚︎ → 🌞︎︎'}`;
   localStorage.setItem(location.href + '|theme', theme);
 });
 
-const theme = localStorage.getItem(location.href + '|theme') ?? 'light';
+const theme = localStorage.getItem(location.href + '|theme') ?? 'dark';
 document.body.classList.toggle('dark', theme === 'dark');
 document.body.classList.toggle('light', theme === 'light');
-themeButton.textContent = theme === 'dark' ? '☽︎ ⟶ ☉︎' : '☽︎ ⟶ ☉︎';
+themeButton.textContent = `Toggle theme: ${theme === 'dark' ? '🌚︎ → 🌞︎︎' : '🌚︎ → 🌞︎︎'}`;
+
+copyButton.addEventListener('click', () => {
+  navigator.clipboard.writeText(outputTextArea.value);
+  copyButton.textContent = '✅ Copied!';
+  window.setTimeout(() => copyButton.textContent = '📄 Copy result', 1000);
+});
 
 // Run tests to make sure no change has regressed the expected test cases
 // Skip a test by prefixing it with `void`: `void { input: …, output: … }`
