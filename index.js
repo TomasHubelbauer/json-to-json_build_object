@@ -4,6 +4,12 @@ const inputTextArea = document.querySelector('#inputTextArea');
 /** @type {HTMLTextAreaElement} */
 const outputTextArea = document.querySelector('#outputTextArea');
 
+/** @type {HTMLButtonElement} */
+const rotateButton = document.querySelector('#rotateButton');
+
+/** @type {HTMLDivElement} */
+const mainDiv = document.querySelector('#mainDiv');
+
 function convert(/** @type {string} */ json) {
   if (!json) {
     return '';
@@ -117,6 +123,17 @@ inputTextArea.addEventListener('keydown', event => {
   event.preventDefault();
   inputTextArea.setRangeText('  ', inputTextArea.selectionStart, inputTextArea.selectionEnd, 'end');
 });
+
+rotateButton.addEventListener('click', () => {
+  const flexDirection = mainDiv.style.flexDirection === 'column' ? 'row' : 'column';
+  mainDiv.style.flexDirection = flexDirection;
+  rotateButton.textContent = flexDirection === 'row' ? '║ ⟶ ═' : '═ ⟶ ║';
+  localStorage.setItem(location.href + '|layout', flexDirection);
+});
+
+const flexDirection = localStorage.getItem(location.href + '|layout') ?? 'row';
+mainDiv.style.flexDirection = flexDirection;
+rotateButton.textContent = flexDirection === 'row' ? '║ ⟶ ═' : '═ ⟶ ║';
 
 // Run tests to make sure no change has regressed the expected test cases
 // Skip a test by prefixing it with `void`: `void { input: …, output: … }`

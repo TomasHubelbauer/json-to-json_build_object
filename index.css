@@ -1,9 +1,29 @@
+html {
+  display: flex;
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   font: icon;
 }
 
+h1 {
+  display: flex;
+}
+
+button {
+  margin: 0 0 0 auto;
+}
+
+#mainDiv {
+  display: flex;
+  flex: 1;
+  gap: 1ex;
+}
+
 textarea {
-  display: block;
-  height: 30vh;
-  width: 100%;
+  flex: 1;
 }
