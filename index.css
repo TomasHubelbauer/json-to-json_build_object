@@ -1,0 +1,9 @@
+body {
+  font: icon;
+}
+
+textarea {
+  display: block;
+  height: 30vh;
+  width: 100%;
+}
