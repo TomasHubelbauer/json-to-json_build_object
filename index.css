@@ -3,7 +3,26 @@ html {
   height: 100%;
 }
 
+:root {
+  --background: #eee;
+  --color: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #222;
+    --color: #eee;
+  }
+}
+
+body.dark {
+  --background: #222;
+  --color: #eee;
+}
+
 body {
+  background: var(--background);
+  color: var(--color);
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -12,10 +31,7 @@ body {
 
 h1 {
   display: flex;
-}
-
-button {
-  margin: 0 0 0 auto;
+  gap: 1ex;
 }
 
 #mainDiv {
@@ -25,5 +41,7 @@ button {
 }
 
 textarea {
+  background: var(--background);
+  color: var(--color);
   flex: 1;
 }

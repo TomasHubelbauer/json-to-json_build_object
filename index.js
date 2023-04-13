@@ -10,6 +10,9 @@ const rotateButton = document.querySelector('#rotateButton');
 /** @type {HTMLDivElement} */
 const mainDiv = document.querySelector('#mainDiv');
 
+/** @type {HTMLButtonElement} */
+const themeButton = document.querySelector('#themeButton');
+
 function convert(/** @type {string} */ json) {
   if (!json) {
     return '';
@@ -134,6 +137,19 @@ rotateButton.addEventListener('click', () => {
 const flexDirection = localStorage.getItem(location.href + '|layout') ?? 'row';
 mainDiv.style.flexDirection = flexDirection;
 rotateButton.textContent = flexDirection === 'row' ? '║ ⟶ ═' : '═ ⟶ ║';
+
+themeButton.addEventListener('click', () => {
+  const theme = document.body.classList.contains('dark') ? 'light' : 'dark';
+  document.body.classList.toggle('dark', theme === 'dark');
+  document.body.classList.toggle('light', theme === 'light');
+  themeButton.textContent = theme === 'dark' ? '☽︎ ⟶ ☉︎' : '☽︎ ⟶ ☉︎';
+  localStorage.setItem(location.href + '|theme', theme);
+});
+
+const theme = localStorage.getItem(location.href + '|theme') ?? 'light';
+document.body.classList.toggle('dark', theme === 'dark');
+document.body.classList.toggle('light', theme === 'light');
+themeButton.textContent = theme === 'dark' ? '☽︎ ⟶ ☉︎' : '☽︎ ⟶ ☉︎';
 
 // Run tests to make sure no change has regressed the expected test cases
 // Skip a test by prefixing it with `void`: `void { input: …, output: … }`
