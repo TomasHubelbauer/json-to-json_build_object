@@ -5,6 +5,9 @@ const inputTextArea = document.querySelector('#inputTextArea');
 const outputTextArea = document.querySelector('#outputTextArea');
 
 /** @type {HTMLButtonElement} */
+const randomButton = document.querySelector('#randomButton');
+
+/** @type {HTMLButtonElement} */
 const rotateButton = document.querySelector('#rotateButton');
 
 /** @type {HTMLDivElement} */
@@ -60,6 +63,7 @@ function convert(/** @type {string} */ json) {
               case 'string': {
                 if (isArray) {
                   items.push(item);
+                  index++;
                 }
                 else {
                   items.push(`'${key}'`, item);
@@ -127,6 +131,12 @@ inputTextArea.addEventListener('keydown', event => {
   inputTextArea.setRangeText('  ', inputTextArea.selectionStart, inputTextArea.selectionEnd, 'end');
 });
 
+randomButton.addEventListener('click', () => {
+  const test = tests[Math.random() * tests.length | 0];
+  inputTextArea.value = test.input;
+  outputTextArea.value = convert(inputTextArea.value);
+});
+
 rotateButton.addEventListener('click', () => {
   const flexDirection = mainDiv.style.flexDirection === 'column' ? 'row' : 'column';
   mainDiv.style.flexDirection = flexDirection;
@@ -154,6 +164,7 @@ themeButton.textContent = theme === 'dark' ? '☽︎ ⟶ ☉︎' : '☽︎ ⟶ �
 // Run tests to make sure no change has regressed the expected test cases
 // Skip a test by prefixing it with `void`: `void { input: …, output: … }`
 // Skip all tests by prefixing this with `void`: `void [ { input: …, output: … } ]`
+// Limit to a single test by calling `tests.splice` and `push`ing the sole test
 const tests = [
   {
     input: '',
@@ -285,6 +296,18 @@ const tests = [
     input: '{ "field": { "field": "a" } }',
     output: `json_build_object('field', json_build_object('field', 'a'))`,
   },
+
+  /* Random stuff I found later */
+
+  // Object in an array following plain values and a nested stress test variant
+  {
+    input: '[ "a", {}, "c" ]',
+    output: `json_build_array('a', json_build_object(), 'c')`,
+  },
+  {
+    input: '[ "a", {}, "c", [ 1, {}, 3 ] ]',
+    output: `json_build_array('a', json_build_object(), 'c', json_build_array(1, json_build_object(), 3))`,
+  }
 ];
 
 let errors = 0;
