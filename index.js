@@ -5,6 +5,10 @@ const inputTextArea = document.querySelector('#inputTextArea');
 const outputTextArea = document.querySelector('#outputTextArea');
 
 function convert(/** @type {string} */ json) {
+  if (!json) {
+    return '';
+  }
+
   try {
     const result = JSON.parse(json, (key, value) => {
       switch (typeof value) {
